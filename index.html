@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuru Mapu — Reciclaje Inteligente</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#00FF88;--verde-dark:#00CC6A;--negro:#0A0A0A;--gris-dark:#111111;--gris-card:#161616;--gris-border:#222222;--blanco:#F5F5F0;--texto-sec:#888888}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--negro);color:var(--blanco);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--gris-border)}
+.nav-logo{display:flex;align-items:center;gap:12px}.nav-logo span{font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--blanco)}
+.nav-links{display:flex;gap:32px;list-style:none}.nav-links a{color:var(--texto-sec);text-decoration:none;font-size:14px;transition:color .2s}.nav-links a:hover{color:var(--verde)}
+.lang-switcher{display:flex;gap:8px}.lang-btn{background:none;border:1px solid var(--gris-border);color:var(--texto-sec);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .2s}.lang-btn.active,.lang-btn:hover{border-color:var(--verde);color:var(--verde)}
+.nav-cta{background:var(--verde);color:var(--negro);padding:10px 20px;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;transition:all .2s}.nav-cta:hover{background:var(--verde-dark)}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 40px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(0,255,136,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);padding:8px 16px;border-radius:99px;font-size:13px;color:var(--verde);margin-bottom:32px;animation:fadeUp .8s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--verde);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;line-height:1;letter-spacing:-2px;margin-bottom:24px;animation:fadeUp .8s .1s ease both}
+.hero h1 span{color:var(--verde)}.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--texto-sec);max-width:600px;line-height:1.6;margin-bottom:16px;animation:fadeUp .8s .2s ease both}
+.hero-mapudungun{font-size:14px;color:rgba(0,255,136,0.5);font-style:italic;margin-bottom:48px;animation:fadeUp .8s .25s ease both}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;animation:fadeUp .8s .3s ease both}
+.btn-primary{background:var(--verde);color:var(--negro);padding:16px 32px;border-radius:10px;font-weight:700;font-size:16px;text-decoration:none;transition:all .2s;border:none;cursor:pointer}.btn-primary:hover{background:var(--verde-dark);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--blanco);padding:16px 32px;border-radius:10px;font-weight:500;font-size:16px;text-decoration:none;border:1px solid var(--gris-border);transition:all .2s}.btn-secondary:hover{border-color:var(--verde);color:var(--verde)}
+.hero-stats{display:flex;gap:48px;margin-top:80px;animation:fadeUp .8s .4s ease both;flex-wrap:wrap;justify-content:center}
+.stat{text-align:center}.stat-num{font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:var(--verde)}.stat-label{font-size:13px;color:var(--texto-sec);margin-top:4px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+section{padding:100px 40px}.section-label{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--verde);margin-bottom:16px}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:800;line-height:1.1;letter-spacing:-1px;margin-bottom:24px}
+.section-desc{color:var(--texto-sec);font-size:17px;line-height:1.7;max-width:600px}.container{max-width:1200px;margin:0 auto}
+.problema{background:var(--gris-dark)}.problema-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:60px}
+.problema-stats{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.stat-card{background:var(--gris-card);border:1px solid var(--gris-border);border-radius:16px;padding:28px;transition:border-color .2s}.stat-card:hover{border-color:var(--verde)}
+.stat-card .num{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:var(--verde);line-height:1}.stat-card .desc{font-size:14px;color:var(--texto-sec);margin-top:8px;line-height:1.5}
+.solucion-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.sol-card{background:var(--gris-card);border:1px solid var(--gris-border);border-radius:20px;padding:36px;transition:all .3s;position:relative;overflow:hidden}
+.sol-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--verde),transparent);opacity:0;transition:opacity .3s}
+.sol-card:hover{border-color:rgba(0,255,136,0.3);transform:translateY(-4px)}.sol-card:hover::before{opacity:1}
+.sol-icon{width:56px;height:56px;background:rgba(0,255,136,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:24px}
+.sol-card h3{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:12px}.sol-card p{color:var(--texto-sec);font-size:15px;line-height:1.6}
+.como{background:var(--gris-dark)}.pasos{display:flex;flex-direction:column;gap:0;margin-top:60px;max-width:700px}
+.paso{display:flex;gap:32px;align-items:flex-start;padding:32px 0;border-bottom:1px solid var(--gris-border)}.paso:last-child{border-bottom:none}
+.paso-num{width:48px;height:48px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--verde);flex-shrink:0}
+.paso-content h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px}.paso-content p{color:var(--texto-sec);font-size:15px;line-height:1.6}
+.campanas-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px}
+.camp-card{background:var(--gris-card);border:1px solid var(--gris-border);border-radius:20px;padding:36px;transition:all .3s}.camp-card:hover{border-color:rgba(0,255,136,0.3);transform:translateY(-4px)}
+.camp-card.coming{border-style:dashed;border-color:rgba(0,255,136,0.2);position:relative}
+.coming-badge{position:absolute;top:20px;right:20px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);color:var(--verde);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:99px}
+.camp-icon{font-size:40px;margin-bottom:20px}.camp-card h3{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:12px}.camp-card p{color:var(--texto-sec);font-size:15px;line-height:1.6}
+.mascota-hint{margin-top:16px;padding:12px 16px;background:rgba(0,255,136,0.05);border-radius:8px;font-size:13px;color:rgba(0,255,136,0.7);font-style:italic}
+.beneficios{background:var(--gris-dark)}.ben-tabs{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap}
+.ben-tab{padding:10px 20px;border-radius:8px;border:1px solid var(--gris-border);background:none;color:var(--texto-sec);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:14px;transition:all .2s}
+.ben-tab.active{background:var(--verde);color:var(--negro);border-color:var(--verde);font-weight:600}
+.ben-content{display:none;grid-template-columns:repeat(3,1fr);gap:20px}.ben-content.active{display:grid}
+.ben-item{background:var(--gris-card);border:1px solid var(--gris-border);border-radius:14px;padding:24px}
+.ben-item .icon{font-size:28px;margin-bottom:12px}.ben-item h4{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px}.ben-item p{color:var(--texto-sec);font-size:14px;line-height:1.5}
+.equipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px;max-width:700px}
+.miembro{background:var(--gris-card);border:1px solid var(--gris-border);border-radius:20px;padding:36px;transition:border-color .2s}.miembro:hover{border-color:rgba(0,255,136,0.3)}
+.miembro-avatar{width:64px;height:64px;background:linear-gradient(135deg,var(--verde),var(--verde-dark));border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--negro);margin-bottom:20px}
+.miembro h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:6px}.miembro .rol{color:var(--verde);font-size:13px;font-weight:500;margin-bottom:12px}.miembro p{color:var(--texto-sec);font-size:14px;line-height:1.6}
+.contacto{background:var(--gris-dark)}.contact-form{max-width:600px;margin-top:60px}
+.form-group{margin-bottom:20px}.form-group label{display:block;font-size:13px;font-weight:500;color:var(--texto-sec);margin-bottom:8px}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--gris-card);border:1px solid var(--gris-border);border-radius:10px;padding:14px 16px;color:var(--blanco);font-family:'DM Sans',sans-serif;font-size:15px;transition:border-color .2s;outline:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--verde)}.form-group textarea{resize:vertical;min-height:120px}.form-group select option{background:var(--gris-card)}
+footer{background:var(--negro);border-top:1px solid var(--gris-border);padding:60px 40px 40px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:60px;max-width:1200px;margin:0 auto}
+.footer-brand p{color:var(--texto-sec);font-size:14px;line-height:1.7;margin-top:16px;max-width:300px}
+.footer-col h4{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:20px;color:var(--blanco)}
+.footer-col ul{list-style:none}.footer-col ul li{margin-bottom:10px}.footer-col ul li a{color:var(--texto-sec);text-decoration:none;font-size:14px;transition:color .2s}.footer-col ul li a:hover{color:var(--verde)}
+.footer-bottom{max-width:1200px;margin:40px auto 0;padding-top:24px;border-top:1px solid var(--gris-border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-bottom p{color:var(--texto-sec);font-size:13px}.footer-tagline{color:var(--verde);font-size:13px;font-style:italic}
+[data-lang]{display:none}[data-lang].visible{display:block}span[data-lang].visible{display:inline}
+@media(max-width:768px){nav{padding:16px 20px}.nav-links{display:none}section{padding:70px 20px}.problema-grid,.solucion-grid,.campanas-grid,.equipo-grid,.footer-grid{grid-template-columns:1fr}.problema-stats{grid-template-columns:1fr 1fr}.ben-content.active{grid-template-columns:1fr}.hero-stats{gap:24px}footer{padding:40px 20px}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="Kuru Mapu" style="width:36px;height:36px;border-radius:8px" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <div style="width:36px;height:36px;background:linear-gradient(135deg,#00FF88,#00CC6A);border-radius:8px;display:none;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#0A0A0A">KM</div>
+    <span>Kuru Mapu</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#problema" data-lang="es" class="visible">El Problema</a><a href="#problema" data-lang="en">The Problem</a><a href="#problema" data-lang="md">Küme Rakizuam</a></li>
+    <li><a href="#solucion" data-lang="es" class="visible">Solución</a><a href="#solucion" data-lang="en">Solution</a><a href="#solucion" data-lang="md">Kimeltuwün</a></li>
+    <li><a href="#campanas" data-lang="es" class="visible">Campañas</a><a href="#campanas" data-lang="en">Campaigns</a><a href="#campanas" data-lang="md">Mogen</a></li>
+    <li><a href="#equipo" data-lang="es" class="visible">Equipo</a><a href="#equipo" data-lang="en">Team</a><a href="#equipo" data-lang="md">Pu Wenxu</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:16px">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('md')">MD</button>
+    </div>
+    <a href="#contacto" class="nav-cta">Postula</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span data-lang="es" class="visible">🌱 Desde Temuco para Chile</span><span data-lang="en">🌱 From Temuco for Chile</span><span data-lang="md">🌱 Temuko mew Chile mew</span></div>
+  <h1><span data-lang="es" class="visible">Reciclaje<br><span>Inteligente</span></span><span data-lang="en">Smart<br><span>Recycling</span></span><span data-lang="md">Küme<br><span>Kuru Mapu</span></span></h1>
+  <p class="hero-sub"><span data-lang="es" class="visible">Tecnología IoT que transforma el reciclaje en tu condominio en datos reales, beneficios tangibles y comunidad activa.</span><span data-lang="en">IoT technology that transforms recycling in your building into real data, tangible benefits, and active community.</span><span data-lang="md">IoT kimün mew pu lof mew küme rakizuam kiñe pu che mew.</span></p>
+  <p class="hero-mapudungun"><em>"Kuru Mapu"</em> — Tierra Negra en Mapudungún</p>
+  <div class="hero-btns">
+    <a href="#contacto" class="btn-primary"><span data-lang="es" class="visible">Postula tu condominio</span><span data-lang="en">Apply your building</span><span data-lang="md">Kimeltuwün lof</span></a>
+    <a href="#solucion" class="btn-secondary"><span data-lang="es" class="visible">Cómo funciona</span><span data-lang="en">How it works</span><span data-lang="md">Chumlechi</span></a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Usuarios objetivo</div></div>
+    <div class="stat"><div class="stat-num">0%</div><div class="stat-label">Ingreso manual — datos 100% reales</div></div>
+    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Trazabilidad en tiempo real</div></div>
+  </div>
+</section>
+
+<section class="problema" id="problema">
+  <div class="container">
+    <p class="section-label" data-lang="es" style="display:block">El Problema</p><p class="section-label" data-lang="en">The Problem</p><p class="section-label" data-lang="md">Weza Rakizuam</p>
+    <div class="problema-grid">
+      <div>
+        <h2 class="section-title"><span data-lang="es" class="visible">Chile recicla poco.<br>Y no sabe cuánto.</span><span data-lang="en">Chile recycles little.<br>And doesn't know how much.</span><span data-lang="md">Küme rakizuam weza<br>Chile mew.</span></h2>
+        <p class="section-desc" data-lang="es" style="display:block">Los condominios y edificios de alta densidad no tienen datos precisos sobre sus hábitos de reciclaje. Sin datos, no hay estrategia. Sin estrategia, no hay cambio.</p>
+        <p class="section-desc" data-lang="en">High-density buildings have no precise data about their recycling habits. Without data, no strategy. Without strategy, no change.</p>
+      </div>
+      <div class="problema-stats">
+        <div class="stat-card"><div class="num">8%</div><div class="desc" data-lang="es" style="display:block">Tasa de reciclaje en Chile vs 30%+ en países líderes</div><div class="desc" data-lang="en">Chile's recycling rate vs 30%+</div></div>
+        <div class="stat-card"><div class="num">0</div><div class="desc" data-lang="es" style="display:block">Datos individuales de reciclaje disponibles hoy</div><div class="desc" data-lang="en">Individual recycling data available today</div></div>
+        <div class="stat-card"><div class="num">70%</div><div class="desc" data-lang="es" style="display:block">Aluminio reciclable que termina en basura</div><div class="desc" data-lang="en">Recyclable aluminum ending in landfill</div></div>
+        <div class="stat-card"><div class="num">LEY</div><div class="desc" data-lang="es" style="display:block">REP exige trazabilidad que nadie puede entregar hoy</div><div class="desc" data-lang="en">REP law demands traceability no one provides</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solucion">
+  <div class="container">
+    <p class="section-label" data-lang="es" style="display:block">La Solución</p><p class="section-label" data-lang="en">The Solution</p>
+    <div style="max-width:600px"><h2 class="section-title"><span data-lang="es" class="visible">Un ecosistema completo de reciclaje inteligente</span><span data-lang="en">A complete smart recycling ecosystem</span></h2><p class="section-desc" data-lang="es" style="display:block">Hardware + Software + Comunidad. Los tres pilares que hacen de Kuru Mapu una solución única en el sur de Chile.</p><p class="section-desc" data-lang="en">Hardware + Software + Community. The three pillars that make Kuru Mapu unique in southern Chile.</p></div>
+    <div class="solucion-grid">
+      <div class="sol-card"><div class="sol-icon">🤖</div><h3 data-lang="es" style="display:block">Máquina Abollalatas IoT</h3><h3 data-lang="en">IoT Can Crusher Machine</h3><p data-lang="es" style="display:block">Instalada en tu condominio. Cuenta cada lata en tiempo real con sensor fotoeléctrico. Se activa con un toque y envía los datos automáticamente.</p><p data-lang="en">Installed in your building. Counts each can in real time. Activated with a touch and sends data automatically.</p></div>
+      <div class="sol-card"><div class="sol-icon">📱</div><h3 data-lang="es" style="display:block">App Kuru Mapu</h3><h3 data-lang="en">Kuru Mapu App</h3><p data-lang="es" style="display:block">Escanea el QR, acumula EcoCredits con cada lata, completa misiones y canjea beneficios reales en comercios locales.</p><p data-lang="en">Scan the QR, earn EcoCredits with each can, complete missions and redeem real benefits at local businesses.</p></div>
+      <div class="sol-card"><div class="sol-icon">📊</div><h3 data-lang="es" style="display:block">Big Data Ambiental</h3><h3 data-lang="en">Environmental Big Data</h3><p data-lang="es" style="display:block">Datos precisos por persona, sector y condominio en tiempo real. Reportes para municipios y organismos de desarrollo.</p><p data-lang="en">Precise data per person, sector and building in real time. Reports for municipalities and development agencies.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="como" id="como">
+  <div class="container">
+    <p class="section-label" data-lang="es" style="display:block">Cómo Funciona</p><p class="section-label" data-lang="en">How It Works</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start">
+      <div>
+        <h2 class="section-title"><span data-lang="es" class="visible">Simple para el usuario. Poderoso para los datos.</span><span data-lang="en">Simple for the user. Powerful for the data.</span></h2>
+        <div class="pasos">
+          <div class="paso"><div class="paso-num">1</div><div class="paso-content"><h3 data-lang="es" style="display:block">Presiona el botón</h3><h3 data-lang="en">Press the button</h3><p data-lang="es" style="display:block">La máquina despierta y muestra el nombre de la red WiFi en su pantalla.</p><p data-lang="en">The machine wakes up and shows the WiFi network name on its screen.</p></div></div>
+          <div class="paso"><div class="paso-num">2</div><div class="paso-content"><h3 data-lang="es" style="display:block">Conecta la app</h3><h3 data-lang="en">Connect the app</h3><p data-lang="es" style="display:block">La app identifica tu usuario y conecta la máquina a internet via tu celular.</p><p data-lang="en">The app identifies your user and connects the machine to the internet via your phone.</p></div></div>
+          <div class="paso"><div class="paso-num">3</div><div class="paso-content"><h3 data-lang="es" style="display:block">Inserta tus latas</h3><h3 data-lang="en">Insert your cans</h3><p data-lang="es" style="display:block">El sensor cuenta cada lata automáticamente. Sin ingreso manual, sin fraude.</p><p data-lang="en">The sensor counts each can automatically. No manual input, no fraud.</p></div></div>
+          <div class="paso"><div class="paso-num">4</div><div class="paso-content"><h3 data-lang="es" style="display:block">Gana EcoCredits</h3><h3 data-lang="en">Earn EcoCredits</h3><p data-lang="es" style="display:block">Los datos se envían al servidor y tus puntos aparecen en la app al instante.</p><p data-lang="en">Data is sent to the server and your points appear in the app instantly.</p></div></div>
+        </div>
+      </div>
+      <div style="background:var(--gris-card);border:1px solid var(--gris-border);border-radius:24px;padding:40px;position:sticky;top:100px">
+        <div style="text-align:center;margin-bottom:24px"><div style="font-size:48px;margin-bottom:16px">📱</div><div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px">Trazabilidad 100% digital</div><p style="color:var(--texto-sec);font-size:14px">Cada lata tiene un registro inmutable vinculado a un usuario real.</p></div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;padding:12px;background:rgba(0,255,136,0.05);border-radius:10px;font-size:14px"><span style="color:var(--texto-sec)">Usuario</span><span style="color:var(--verde)">pablo@kuru.cl</span></div>
+          <div style="display:flex;justify-content:space-between;padding:12px;background:rgba(0,255,136,0.05);border-radius:10px;font-size:14px"><span style="color:var(--texto-sec)">Condominio</span><span style="color:var(--verde)">Portal de la Frontera</span></div>
+          <div style="display:flex;justify-content:space-between;padding:12px;background:rgba(0,255,136,0.05);border-radius:10px;font-size:14px"><span style="color:var(--texto-sec)">Latas</span><span style="color:var(--verde)">23 latas</span></div>
+          <div style="display:flex;justify-content:space-between;padding:12px;background:rgba(0,255,136,0.05);border-radius:10px;font-size:14px"><span style="color:var(--texto-sec)">EcoCredits</span><span style="color:var(--verde)">+115 EC</span></div>
+          <div style="display:flex;justify-content:space-between;padding:12px;background:rgba(0,255,136,0.05);border-radius:10px;font-size:14px"><span style="color:var(--texto-sec)">Fecha</span><span style="color:var(--verde)">28/05/2026 14:32</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="campanas">
+  <div class="container">
+    <p class="section-label" data-lang="es" style="display:block">Campañas</p><p class="section-label" data-lang="en">Campaigns</p>
+    <div style="max-width:600px"><h2 class="section-title"><span data-lang="es" class="visible">Más que una máquina. Un movimiento.</span><span data-lang="en">More than a machine. A movement.</span></h2><p class="section-desc" data-lang="es" style="display:block">Kuru Mapu sale a las calles con campañas que conectan a la comunidad con el reciclaje de forma real y memorable.</p><p class="section-desc" data-lang="en">Kuru Mapu takes to the streets with campaigns that connect the community with recycling in a real and memorable way.</p></div>
+    <div class="campanas-grid">
+      <div class="camp-card"><div class="camp-icon">🤝</div><h3 data-lang="es" style="display:block">Campañas Interactivas</h3><h3 data-lang="en">Interactive Campaigns</h3><p data-lang="es" style="display:block">Stands presenciales en los condominios donde explicamos el sistema, regalamos merchandising y acercamos Kuru Mapu a cada vecino.</p><p data-lang="en">On-site stands in buildings where we explain the system, give away merchandise and bring Kuru Mapu to each neighbor.</p></div>
+      <div class="camp-card"><div class="camp-icon">🧹</div><h3 data-lang="es" style="display:block">Limpieza de Sectores</h3><h3 data-lang="en">Sector Cleanup</h3><p data-lang="es" style="display:block">Jornadas comunitarias de recolección y limpieza de sectores urbanos. Los participantes acumulan EcoCredits extra.</p><p data-lang="en">Community collection and cleanup days in urban areas. Participants earn extra EcoCredits.</p></div>
+      <div class="camp-card coming"><div class="coming-badge">Próximamente</div><div class="camp-icon">🎭</div><h3 data-lang="es" style="display:block">La Mascota Kuru Mapu</h3><h3 data-lang="en">The Kuru Mapu Mascot</h3><p data-lang="es" style="display:block">Una mascota con identidad local y mapuche que representará al proyecto en las calles de Temuco.</p><p data-lang="en">A mascot with local and Mapuche identity that will represent the project in the streets of Temuco.</p><div class="mascota-hint">👀 Algo se está gestando en Temuco...</div></div>
+      <div class="camp-card coming"><div class="coming-badge">Próximamente</div><div class="camp-icon">📱</div><h3 data-lang="es" style="display:block">Misiones Especiales</h3><h3 data-lang="en">Special Missions</h3><p data-lang="es" style="display:block">Campañas digitales dentro de la app con misiones de tiempo limitado y premios exclusivos.</p><p data-lang="en">Digital campaigns within the app with time-limited missions and exclusive prizes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="beneficios" id="beneficios">
+  <div class="container">
+    <p class="section-label" data-lang="es" style="display:block">Beneficios</p><p class="section-label" data-lang="en">Benefits</p>
+    <h2 class="section-title"><span data-lang="es" class="visible">Todos ganan con Kuru Mapu</span><span data-lang="en">Everyone wins with Kuru Mapu</span></h2>
+    <div class="ben-tabs">
+      <button class="ben-tab active" onclick="showBen('vecinos',this)">Vecinos</button>
+      <button class="ben-tab" onclick="showBen('condominios',this)">Condominios</button>
+      <button class="ben-tab" onclick="showBen('municipios',this)">Municipios</button>
+    </div>
+    <div class="ben-content active" id="ben-vecinos">
+      <div class="ben-item"><div class="icon">🎁</div><h4>EcoCredits canjeables</h4><p>Acumula puntos por cada lata y canjéalos en descuentos en gastos comunes y comercios locales.</p></div>
+      <div class="ben-item"><div class="icon">🏆</div><h4>Ranking y competencia</h4><p>Compite con otros vecinos y condominios en el ranking mensual de reciclaje.</p></div>
+      <div class="ben-item"><div class="icon">🎯</div><h4>Misiones y recompensas</h4><p>Misiones diarias, semanales y mensuales con recompensas especiales para los más activos.</p></div>
+    </div>
+    <div class="ben-content" id="ben-condominios">
+      <div class="ben-item"><div class="icon">📊</div><h4>Datos en tiempo real</h4><p>Panel de control con estadísticas precisas de reciclaje por unidad, torre y sector.</p></div>
+      <div class="ben-item"><div class="icon">🌿</div><h4>Certificación sustentable</h4><p>Acredita el perfil sustentable del condominio con datos verificables ante la Ley REP.</p></div>
+      <div class="ben-item"><div class="icon">💰</div><h4>Valorización del material</h4><p>El aluminio recolectado se convierte en materia prima para la industria local.</p></div>
+    </div>
+    <div class="ben-content" id="ben-municipios">
+      <div class="ben-item"><div class="icon">🗺️</div><h4>Mapas de calor</h4><p>Visualización geográfica de los sectores con mayor y menor reciclaje por mes.</p></div>
+      <div class="ben-item"><div class="icon">📈</div><h4>Métricas para Corfo</h4><p>Datos duros y verificables para justificar inversión pública en reciclaje urbano.</p></div>
+      <div class="ben-item"><div class="icon">🏙️</div><h4>Política pública basada en datos</h4><p>Por primera vez, estadísticas reales de reciclaje por ciudadano, edificio y sector.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="equipo">
+  <div class="container">
+    <p class="section-label" data-lang="es" style="display:block">El Equipo</p><p class="section-label" data-lang="en">The Team</p>
+    <h2 class="section-title"><span data-lang="es" class="visible">Construido desde Temuco</span><span data-lang="en">Built from Temuco</span></h2>
+    <div class="equipo-grid">
+      <div class="miembro"><div class="miembro-avatar">EG</div><h3>Emanuel Gutiérrez</h3><div class="rol">Co-fundador · Hardware</div><p>Técnico en mecánica automotriz con experiencia en mecanizado de piezas. Responsable del diseño y construcción física de la máquina abollalatas.</p></div>
+      <div class="miembro"><div class="miembro-avatar">PA</div><h3>Pablo Aedo Cayul</h3><div class="rol">Co-fundador · Software & Logística</div><p>Técnico en topografía con conocimientos en impresión 3D y logística. Responsable del firmware ESP32, backend y app móvil.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contacto" id="contacto">
+  <div class="container">
+    <p class="section-label" data-lang="es" style="display:block">Postula tu Condominio</p><p class="section-label" data-lang="en">Apply Your Building</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start">
+      <div>
+        <h2 class="section-title"><span data-lang="es" class="visible">¿Tu condominio quiere ser el primero?</span><span data-lang="en">Does your building want to be first?</span></h2>
+        <p class="section-desc" data-lang="es" style="display:block">Estamos buscando condominios piloto en Temuco. Cupos limitados.</p>
+        <p class="section-desc" data-lang="en">We're looking for pilot buildings in Temuco. Limited spots.</p>
+        <div style="margin-top:40px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;align-items:center;gap:12px;font-size:15px"><span style="color:var(--verde)">✓</span><span>Instalación sin costo en fase piloto</span></div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:15px"><span style="color:var(--verde)">✓</span><span>Capacitación a la comunidad</span></div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:15px"><span style="color:var(--verde)">✓</span><span>Reporte mensual de impacto</span></div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:15px"><span style="color:var(--verde)">✓</span><span>Soporte técnico continuo</span></div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-group"><label>Nombre completo</label><input type="text" placeholder="Tu nombre"></div>
+        <div class="form-group"><label>Correo electrónico</label><input type="email" placeholder="tu@correo.com"></div>
+        <div class="form-group"><label>Nombre del condominio</label><input type="text" placeholder="Ej: Condominio Los Robles"></div>
+        <div class="form-group"><label>Sector / Barrio</label><input type="text" placeholder="Ej: Portal de la Frontera"></div>
+        <div class="form-group"><label>Número aproximado de unidades</label><select><option value="">Seleccionar...</option><option>1-50 unidades</option><option>51-100 unidades</option><option>101-200 unidades</option><option>200+ unidades</option></select></div>
+        <div class="form-group"><label>Mensaje (opcional)</label><textarea placeholder="Cuéntanos sobre tu condominio..."></textarea></div>
+        <button class="btn-primary" style="width:100%;font-size:16px;padding:16px" onclick="submitForm()">Enviar postulación</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <img src="logo.png" alt="Kuru Mapu" style="width:40px;height:40px;border-radius:10px" onerror="this.style.display='none'">
+        <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px">Kuru Mapu</span>
+      </div>
+      <p>Plataforma tecnológica de reciclaje inteligente para condominios y edificios en Chile. Desde Temuco para el mundo.</p>
+      <p style="margin-top:12px;font-style:italic;color:rgba(0,255,136,0.5);font-size:13px">"Kuru Mapu" — Tierra Negra en Mapudungún</p>
+    </div>
+    <div class="footer-col"><h4>Navegación</h4><ul><li><a href="#problema">El Problema</a></li><li><a href="#solucion">La Solución</a></li><li><a href="#campanas">Campañas</a></li><li><a href="#equipo">El Equipo</a></li><li><a href="#contacto">Contacto</a></li></ul></div>
+    <div class="footer-col"><h4>Contacto</h4><ul><li><a href="mailto:hola@kurumapu.cl">hola@kurumapu.cl</a></li><li><a href="#">Temuco, Chile</a></li><li><a href="#">Instagram</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Kuru Mapu. Todos los derechos reservados.</p>
+    <p class="footer-tagline">"El poder de reciclar en tus manos" 🌱</p>
+  </div>
+</footer>
+
+<script>
+let currentLang='es';
+function setLang(lang){
+  currentLang=lang;
+  document.querySelectorAll('[data-lang]').forEach(el=>{
+    if(el.getAttribute('data-lang')===lang){el.style.display=el.tagName==='SPAN'||el.tagName==='A'?'inline':'block';}
+    else{el.style.display='none';}
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn=>btn.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+}
+function showBen(tab,btn){
+  document.querySelectorAll('.ben-content').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.ben-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('ben-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+function submitForm(){alert('¡Gracias! Nos pondremos en contacto contigo pronto.');}
+setLang('es');
+</script>
+</body>
+</html>
