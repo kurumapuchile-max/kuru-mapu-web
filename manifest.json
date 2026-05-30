@@ -1,0 +1,21 @@
+{
+  "name": "Kuru Mapu",
+  "short_name": "Kuru Mapu",
+  "description": "Reciclaje inteligente para tu condominio",
+  "start_url": "https://psychedelic-eco-coin-flow.base44.app",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#00FF88",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
